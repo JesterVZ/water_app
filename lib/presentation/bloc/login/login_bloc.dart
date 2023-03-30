@@ -11,10 +11,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginUsecase usecase;
   LoginBloc({required this.usecase}) : super(const LoginState.initial()) {
     on<Started>((event, emit) {
-      // TODO: implement event handler
+      emit(const LoginState.initial());
     });
-    on<Login>((event, emit) {
-      // TODO: implement event handler
+    on<Login>((event, emit) async {
+      emit(const LoginState.loading());
+      final loginResult = await usecase(event.request);
+      loginResult.fold((failure) {
+        emit(const LoginState.error("Login error"));
+      }, (result) {
+        emit(LoginState.login(result));
+      });
     });
   }
 }
