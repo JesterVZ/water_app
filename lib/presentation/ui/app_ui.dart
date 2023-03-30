@@ -12,4 +12,6 @@ class AppUI {
   static const appSpacing2 = SizedBox(
     height: 33,
   );
+
+  static const borderRadius = 5.0;
 }

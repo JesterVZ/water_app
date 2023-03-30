@@ -17,14 +17,13 @@ class ApiClient {
   Future<Response> sendRequest(
       {required dynamic request,
       required String url,
-      required Method method,
-      dynamic data}) async {
+      required Method method}) async {
     switch (method) {
       case Method.get:
         return await _apiClient.get("${App.baseUrl}$url");
       case Method.post:
         return await _apiClient.post("${App.baseUrl}$url",
-            data: jsonEncode(data));
+            data: jsonEncode(request));
     }
   }
 }

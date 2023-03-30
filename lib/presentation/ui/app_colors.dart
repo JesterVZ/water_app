@@ -17,6 +17,8 @@ class AppColors {
   static const int _appcolorsPrimaryValue = 0xFF3F51B5;
 
   static const grayColor = Colors.grey;
+  static const whiteColor = Colors.white;
+  static const redColor = Colors.red;
 
   static const MaterialColor appcolorsAccent =
       MaterialColor(_appcolorsAccentValue, <int, Color>{
