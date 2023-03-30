@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:water_app/presentation/pages/login/login_screen.dart';
+import 'package:water_app/internal/injection_container.dart' as di;
 import 'package:water_app/presentation/ui/app_colors.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await di.startup();
   runApp(const MyApp());
 }
 
