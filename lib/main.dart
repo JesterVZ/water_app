@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:water_app/presentation/pages/content/main_page.dart';
 import 'package:water_app/internal/injection_container.dart' as di;
+import 'package:water_app/presentation/pages/login/login_screen.dart';
 import 'package:water_app/presentation/ui/app_colors.dart';
 import 'package:water_app/presentation/ui/app_ui.dart';
 
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppUI.borderRadius))),
           bottomAppBarTheme:
               BottomAppBarTheme(color: AppColors.appcolors[400])),
-      home: const MainPage(),
+      home: const LoginScreen(),
     );
   }
 }

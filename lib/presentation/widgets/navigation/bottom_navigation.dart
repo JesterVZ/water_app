@@ -13,26 +13,27 @@ class BottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-        items: [
-          _buildItem(TabItem.main),
-          _buildItem(TabItem.downloads),
-          _buildItem(TabItem.logs),
-          _buildItem(TabItem.users)
-        ],
-        onTap: (index) {
-          onSelectTab(TabItem.values[index]);
-        },
-        currentIndex: currentTab.index,
-        type: BottomNavigationBarType.fixed);
+      items: [
+        _buildItem(TabItem.main, Icons.home),
+        _buildItem(TabItem.downloads, Icons.download),
+        _buildItem(TabItem.logs, Icons.list_alt_rounded),
+        _buildItem(TabItem.users, Icons.supervised_user_circle_sharp)
+      ],
+      onTap: (index) {
+        onSelectTab(TabItem.values[index]);
+      },
+      currentIndex: currentTab.index,
+    );
   }
 
-  BottomNavigationBarItem _buildItem(TabItem tabItem) {
+  BottomNavigationBarItem _buildItem(TabItem tabItem, IconData icon) {
     return BottomNavigationBarItem(
-        icon: Icon(TabIcons[tabItem], color: _colorMatching(tabItem)),
+        backgroundColor: AppColors.appcolors,
+        icon: Icon(icon, color: _colorMatching(tabItem)),
         label: names[tabItem]);
   }
 
   Color _colorMatching(TabItem item) {
-    return currentTab == item ? AppColors.appcolors : AppColors.whiteColor;
+    return AppColors.whiteColor;
   }
 }

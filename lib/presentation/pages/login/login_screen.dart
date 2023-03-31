@@ -22,7 +22,16 @@ class _LoginScreenState extends State<LoginScreen> {
   final bloc = locator<LoginBloc>();
   bool loading = false;
 
+  bool isLogin = false;
+
   String? errorMessage;
+
+  _push(BuildContext context) {
+    Future.microtask(() => Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const MainPage()),
+        (route) => false));
+  }
 
   @override
   Widget build(BuildContext context) => BlocProvider(
@@ -33,8 +42,11 @@ class _LoginScreenState extends State<LoginScreen> {
             initial: () => loading = false,
             loading: () => loading = true,
             login: (response) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const MainPage()));
+              if (!isLogin) {
+                _push(context);
+              }
+
+              isLogin = true;
             },
             error: (message) {
               errorMessage = message;

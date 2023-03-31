@@ -23,7 +23,7 @@ class ApiClient {
         return await _apiClient.get("${App.baseUrl}$url");
       case Method.post:
         return await _apiClient.post("${App.baseUrl}$url",
-            data: jsonEncode(request));
+            data: FormData.fromMap(jsonDecode(jsonEncode(request))));
     }
   }
 }
