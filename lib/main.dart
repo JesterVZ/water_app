@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:water_app/internal/injection_container.dart' as di;
+import 'package:water_app/presentation/pages/content/main_page.dart';
 import 'package:water_app/presentation/pages/login/login_screen.dart';
 import 'package:water_app/presentation/ui/app_colors.dart';
 import 'package:water_app/presentation/ui/app_ui.dart';
@@ -7,11 +11,16 @@ import 'package:water_app/presentation/ui/app_ui.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.startup();
-  runApp(const MyApp());
+  runZonedGuarded(() async {
+    final prefs = await SharedPreferences.getInstance();
+    final loginData = prefs.getString('login-data');
+    runApp(MyApp(forceLogin: loginData == null));
+  }, (error, stack) {});
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool forceLogin;
+  const MyApp({super.key, required this.forceLogin});
 
   // This widget is the root of your application.
   @override
@@ -37,7 +46,7 @@ class MyApp extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppUI.borderRadius))),
           bottomAppBarTheme:
               BottomAppBarTheme(color: AppColors.appcolors[400])),
-      home: const LoginScreen(),
+      home: forceLogin ? const LoginScreen() : const MainPage(),
     );
   }
 }

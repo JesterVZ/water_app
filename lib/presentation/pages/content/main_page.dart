@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:water_app/base/enums/tab_item.dart';
 import 'package:water_app/presentation/pages/content/tabs/loads_tab.dart';
@@ -18,6 +16,8 @@ class MainPage extends StatefulWidget {
 
 class _MainPage extends State<MainPage> {
   var _currentTab = TabItem.main;
+
+  final dropdownList = ['Выход'];
 
   ///ключи для навигаторов
   final _navKeys = {
@@ -52,27 +52,37 @@ class _MainPage extends State<MainPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('-=MSD1=-')),
-      body: IndexedStack(
-        index: _currentTab.index,
-        children: [
-          _buildNavigator(TabItem.main, navigatorList[0]),
-          _buildNavigator(TabItem.downloads, navigatorList[1]),
-          _buildNavigator(TabItem.logs, navigatorList[2]),
-          _buildNavigator(TabItem.users, navigatorList[3])
-        ],
-      ),
-      bottomNavigationBar:
-          BottomNavigation(currentTab: _currentTab, onSelectTab: _onSelectTab),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: const Text('-=MSD1=-'),
+          actions: _buildActions(),
+        ),
+        body: IndexedStack(
+          index: _currentTab.index,
+          children: [
+            _buildNavigator(TabItem.main, navigatorList[0]),
+            _buildNavigator(TabItem.downloads, navigatorList[1]),
+            _buildNavigator(TabItem.logs, navigatorList[2]),
+            _buildNavigator(TabItem.users, navigatorList[3])
+          ],
+        ),
+        bottomNavigationBar: BottomNavigation(
+            currentTab: _currentTab, onSelectTab: _onSelectTab),
+      );
 
-  Widget _buildNavigator(TabItem tabItem, Widget navigator) {
-    return Offstage(
-      offstage: _currentTab != tabItem,
-      child: navigator,
-    );
-  }
+  Widget _buildNavigator(TabItem tabItem, Widget navigator) => Offstage(
+        offstage: _currentTab != tabItem,
+        child: navigator,
+      );
+
+  List<Widget> _buildActions() => [
+        DropdownButton(
+            hint: const Text('Админ Юзерович'),
+            icon: const Icon(Icons.arrow_drop_down),
+            underline: null,
+            items: dropdownList
+                .map((x) => DropdownMenuItem(child: Text(x)))
+                .toList(),
+            onChanged: (value) {})
+      ];
 }
